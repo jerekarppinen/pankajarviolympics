@@ -1,0 +1,27 @@
+[
+	{
+	"name": "Tikanheitto",
+	"direction": "high"
+}, {
+	"name": "Kävynheitto",
+	"direction": "high"
+}, {
+	"name": "Pituushyppy",
+	"direction": "high"
+}, {
+	"name": "Tukkihumala",
+	"direction": "low"
+},
+{
+	"name": "Tölkkikävely",
+	"direction": "low"
+},
+{
+	"name": "Kengänheitto",
+	"direction": "high"
+},
+{
+	"name": "Mölkky",
+	"direction": "high"
+}
+]
