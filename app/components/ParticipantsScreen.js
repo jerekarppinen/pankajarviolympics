@@ -7,6 +7,9 @@ import {
 import { 
     Icon
 } from 'react-native-elements';
+import { SQLite } from 'expo';
+
+const db = SQLite.openDatabase('db.db');
 
 const BLUE = '#428AF8';
 const LIGHT_GRAY = '#D3D3D3';
@@ -17,6 +20,7 @@ export default class ParticipantsScreen extends React.Component {
         super(props);
         this.state = {
             gamerPlaceholder: '',
+            playerName: ''
         }
     }
 
@@ -34,9 +38,17 @@ export default class ParticipantsScreen extends React.Component {
         }
     };
 
-    handleChange = text => {
-        console.log('text', text)
-    };
+    onPress() {
+        db.transaction(tx => {
+            tx.executeSql(
+              'INSERT INTO participants (name) VALUES (?)',
+              [this.state.playerName],
+              (tx, results) => {
+                  console.log('Results', results)
+              }
+            );
+          });
+    }
 
 
     render() {
@@ -47,13 +59,18 @@ export default class ParticipantsScreen extends React.Component {
             <View style={styles.NewGamerContainer}>
                 <TextInput
                     style={styles.NewGamerInput}
-                    onChangeText={ (text) => this.handleChange({text}) }
+                    onChangeText={ (playerName) => this.setState({playerName}) }
                     selectionColor={BLUE}
                     underlineColorAndroid={
                         isFocused ? BLUE : LIGHT_GRAY
                     }
                 />
-                <Icon name='plus' type='font-awesome' color='green' />
+                <Icon
+                    name='plus'
+                    type='font-awesome'
+                    color='green'
+                    onPress={ () => this.onPress() }
+                />
             </View>
         );
     }
